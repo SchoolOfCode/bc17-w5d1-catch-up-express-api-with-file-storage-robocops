@@ -79,4 +79,19 @@ export async function updateRecipeByID(id, updatedRecipe) {
 }
 
 // DELETE A RECIPE BY ID
-export async function deleteRecipeByID(id) {}
+export async function deleteRecipeByID(id) {
+  try {
+    let db = await fs.readFile(fileName, "utf-8");
+    let parsedDb = JSON.parse(db);
+    const index = parsedDb.findIndex((recipe) => recipe.id === id);
+    if (index === -1) {
+      throw new Error("Recipe not found");
+    }
+    parsedDb.splice(index, 1); // Remove the recipe at the found index
+    await fs.writeFile(fileName, JSON.stringify(parsedDb, null, 2), "utf-8"); // Write the updated array back to the file
+    return { message: "Recipe deleted successfully" };
+  } catch (error) {
+    console.error(error);
+    throw error; // Rethrow the error to handle it in the calling function
+  }
+}
