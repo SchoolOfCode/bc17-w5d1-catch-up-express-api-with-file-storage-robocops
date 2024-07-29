@@ -88,7 +88,7 @@ export async function deleteRecipeByID(id) {
       throw new Error("Recipe not found");
     }
     let deleteRecipe = parsedDb.splice(index, 1);
-    await fs.writeFile(fileName, JSON.stringify(parsedDb, null, 2), "utf-8");
+    await fs.writeFile(fileName, JSON.stringify(parsedDb), "utf-8");
     return deleteRecipe;
   } catch (error) {
     console.error(error);

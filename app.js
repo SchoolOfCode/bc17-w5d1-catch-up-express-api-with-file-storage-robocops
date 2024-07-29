@@ -46,9 +46,10 @@ app.patch("/api/recipes/:id", async (req, res) => {
 });
 app.delete("/api/recipes/:id", async (req, res) => {
   let recipe = await deleteRecipeByID(req.params.id);
-  recipe.status(200).json({
+  console.log(recipe)
+  res.status(200).json({
     success: true,
-    payload: recipe,
+    payload: recipe
   });
 });
 
