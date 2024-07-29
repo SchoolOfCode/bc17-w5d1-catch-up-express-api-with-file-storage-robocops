@@ -27,14 +27,19 @@ app.get("/api/recipes", async (req, res) => {
   });
 })
 
-app.get("/api/recipes/:id", async (req, res) => {
-  let recipe = await getRecipeByID(req.params.id);
+app.post("/api/recipes", async (req, res) => {
+  let recipe = await createRecipe(req.body);
+  try {
+    res.status(200).json({
+      success: true,
+      payload: recipe
+    })
+  } catch (error) {
+    console.log(error.message)
+  }
 
-  res.status(200).json({
-    success: true,
-    payload: recipe
-  })
-})
+
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

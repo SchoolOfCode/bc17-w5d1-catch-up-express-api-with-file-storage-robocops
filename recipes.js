@@ -34,7 +34,16 @@ export async function createRecipe(newRecipe) {
 	try {
 		let db = await fs.readFile(fileName, "utf-8")
 		let parsedDb = JSON.parse(db);
-		parsedDb.push(newRecipe)
+		if (newRecipe.title && newRecipe.ingredients && newRecipe.instructions && newRecipe.image
+		) {
+			parsedDb.push({
+				...newRecipe,
+				id: uuidv4()
+			})
+		} else {
+			return null
+		}
+
 		const returnedDb = JSON.stringify(parsedDb)
 		return fs.writeFile(fileName, returnedDb, "utf-8")
 	} catch (error) {
@@ -47,5 +56,3 @@ export async function updateRecipeByID(id, updatedRecipe) { }
 
 // DELETE A RECIPE BY ID
 export async function deleteRecipeByID(id) { }
-
-createRecipe("test")
