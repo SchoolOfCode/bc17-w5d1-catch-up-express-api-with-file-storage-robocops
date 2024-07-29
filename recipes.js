@@ -1,4 +1,4 @@
-import fs from "node:fs/promises";
+import * as fs from "node:fs/promises";
 import { v4 as uuidv4 } from "uuid";
 
 const fileName = "recipes.json";
@@ -10,7 +10,7 @@ export async function getRecipes() {
 		let parsedDb = JSON.parse(db);
 		return parsedDb;
 	} catch(error) {
-		reject(error);
+		console.error(error);
 	}
 }
 

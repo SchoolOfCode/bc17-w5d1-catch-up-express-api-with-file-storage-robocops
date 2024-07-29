@@ -14,8 +14,12 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 app.use(express.json());
 
-app.get("/api/recipes", (req, res) => {
-	res.status(200).json(getRecipes());
+app.get("/api/recipes", async (req, res) => {
+  let allRecipes = await getRecipes();
+	res.status(200).json({
+    success: true,
+    payload: allRecipes
+  });
 })
 
 app.listen(PORT, () => {
