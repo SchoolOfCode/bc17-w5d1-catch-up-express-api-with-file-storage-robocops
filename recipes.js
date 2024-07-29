@@ -15,7 +15,19 @@ export async function getRecipes() {
 }
 
 // GET A RECIPE BY ID
-export async function getRecipeByID(id) {}
+export async function getRecipeByID(id) {
+	try {
+		let db = await fs.readFile(fileName, "utf-8");
+		let parsedDb = JSON.parse(db);
+
+		return parsedDb.find((el) => {
+			return el.id === id;
+		})
+
+	} catch(error) {
+		console.error(error);
+	}
+}
 
 // CREATE A RECIPE
 export async function createRecipe(newRecipe) {}

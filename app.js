@@ -27,6 +27,15 @@ app.get("/api/recipes", async (req, res) => {
   });
 })
 
+app.get("/api/recipes/:id", async (req, res) => {
+  let recipe = await getRecipeByID(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    payload: recipe
+  })
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
