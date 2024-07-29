@@ -1,7 +1,5 @@
 import express from "express";
-import cors from 'cors';
-
-
+import cors from "cors";
 
 import {
   getRecipes,
@@ -23,22 +21,35 @@ app.get("/api/recipes", async (req, res) => {
   let allRecipes = await getRecipes();
   res.status(200).json({
     success: true,
-    payload: allRecipes
+    payload: allRecipes,
   });
-})
+});
 
 app.post("/api/recipes", async (req, res) => {
   let recipe = await createRecipe(req.body);
   try {
     res.status(200).json({
       success: true,
-      payload: recipe
-    })
+      payload: recipe,
+    });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
+});
 
-
+app.patch("/api/recipes/:id", async (req, res) => {
+  let recipe = await updateRecipeByID(req.params.id, req.body);
+  res.status(200).json({
+    success: true,
+    payload: recipe,
+  });
+});
+app.delete("/api/recipes/:id", async (req, res) => {
+  let recipe = await deleteRecipeByID(req.params.id);
+  recipe.status(200).json({
+    success: true,
+    payload: recipe,
+  });
 });
 
 app.listen(PORT, () => {
