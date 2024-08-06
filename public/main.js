@@ -1,4 +1,4 @@
-const URL = "http://localhost:3000";
+const URL = window.location.href.slice(0, -1);
 
 const recipesSection = document.querySelector("#recipes");
 const getRecipeButton = document.querySelector("#get-recipes");
@@ -73,7 +73,7 @@ function renderRecipe(recipe) {
   recipesSection.appendChild(article);
 }
 
-function createRecipeView({ id, title, ingredients, instructions, image }) {
+function createRecipeView({ title, ingredients, instructions, image }) {
   const article = document.createElement("article");
   const h2 = document.createElement("h2");
   h2.innerText = title;
@@ -87,27 +87,6 @@ function createRecipeView({ id, title, ingredients, instructions, image }) {
   article.appendChild(img);
   article.appendChild(list);
   article.appendChild(p);
-  article.setAttribute("id", id);
-  // Delete Button
-  
-  const deleteButton = document.createElement("button");
-  deleteButton.textContent = "Delete Recipe"
-  deleteButton.setAttribute("id", id)
-  article.appendChild(deleteButton);
-
-  deleteButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    let response = await fetch(`${URL}/api/recipes/${event.target.id}`, {
-      method: "DELETE"
-    })
-    
-    let result = await response.json();
-    let article = document.getElementById(`${event.target.id}`);
-    article.remove();
-
-
-  })
-
   return article;
 }
 
